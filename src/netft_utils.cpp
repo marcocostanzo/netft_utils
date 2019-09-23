@@ -241,10 +241,10 @@ void NetftUtils::netftCallback(const geometry_msgs::WrenchStamped::ConstPtr& dat
   // Filter data
   std::vector<double> tempData;
   tempData.resize(6);
-  tempData.at(0) = -data->wrench.force.x;
+  tempData.at(0) = data->wrench.force.x;
   tempData.at(1) = data->wrench.force.y;
   tempData.at(2) = data->wrench.force.z;
-  tempData.at(3) = -data->wrench.torque.x;
+  tempData.at(3) = data->wrench.torque.x;
   tempData.at(4) = data->wrench.torque.y;
   tempData.at(5) = data->wrench.torque.z;
   
@@ -314,6 +314,9 @@ void NetftUtils::netftCallback(const geometry_msgs::WrenchStamped::ConstPtr& dat
   //ROS_INFO_STREAM("Callback time: " << tf_data_tool.header.stamp.toSec()-ros::Time::now().toSec());
 }                 
 
+
+//----------------------------------------------------------BIAS
+
 // Set the readings from the sensor to zero at this instant and continue to apply the bias on future readings.
 // This doesn't account for gravity.
 // Useful when the sensor's orientation won't change.
@@ -341,6 +344,11 @@ bool NetftUtils::fixedOrientationBias(netft_utils::SetBias::Request &req, netft_
                   
   return true;    
 }
+
+
+//------------------------------------------------------------------
+
+
 
 // Calculate the payload's mass and center of mass so gravity can be compensated for, even as the sensor changes orientation.
 // It's assumed that the payload's center of mass is located on the sensor's central access.
