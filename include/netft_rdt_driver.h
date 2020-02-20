@@ -65,6 +65,8 @@ public:
   // Returns true if new data has arrived, false it function times out
   bool waitForNewData(void);
 
+  std::string frame_id_;
+
 protected:
   void recvThreadFunc(void);
 

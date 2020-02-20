@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<!--    
+    MACRO ati_nano43
+    prefix = name to use as prefix (default '')
+
+    the base link will be ${prefix}base_link
+-->
+<xacro:macro 
+    name="ati_nano43" 
+    params=" 
+        prefix:=''
+        "
+>
+
+<!-- Base link is alligned with ati sensor frame -->
+<link name="${prefix}base_link">
+    <visual>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+            <mesh 
+                filename="package://netft_utils/meshes/ati_nano43.stl" 
+                scale="0.001 0.001 0.001"    
+            />
+        </geometry>
+        <material name="White">
+            <color rgba="1.0 1.0 1.0 1.0"/>
+        </material>
+    </visual>
+    <collision>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <geometry>
+            <mesh 
+                filename="package://netft_utils/meshes/ati_nano43.stl" 
+                scale="0.001 0.001 0.001"    
+            />
+        </geometry>
+    </collision>
+</link>
+
+<link name="${prefix}sensor_frame" />
+<joint name="${prefix}base_link-sensor_frame" type="fixed">
+    <origin xyz="0 0 0.01153" rpy="0 0 0" />
+    <parent link="${prefix}base_link" />
+    <child link="${prefix}sensor_frame" />
+</joint>
+
+<!-- ROS-Industrial 'flange' -->
+<link name="${prefix}flange" />
+<joint name="${prefix}base_link-flange" type="fixed">
+    <origin xyz="0 0 0.01153" rpy="0 0 0" />
+    <parent link="${prefix}base_link" />
+    <child link="${prefix}flange" />
+</joint>
+
+</xacro:macro>
+
+</robot>

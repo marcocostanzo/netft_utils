@@ -57,6 +57,11 @@ int main(int argc, char **argv)
   ros::init(argc, argv, "netft_node");
   ros::NodeHandle nh;
 
+  std::string frame_id;
+
+  ros::NodeHandle("~").param("tf_prefix",frame_id,std::string(""));
+  frame_id = frame_id + "sensor_frame";
+
   float pub_rate_hz;
   string address;
 
@@ -111,6 +116,8 @@ int main(int argc, char **argv)
     is_ready.data = false;
     ready_pub.publish(is_ready);
   }
+
+  netft->frame_id_ = frame_id;
   
   ros::Publisher pub;
   if (publish_wrench)
