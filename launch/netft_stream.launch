@@ -1,0 +1,27 @@
+<launch>
+
+<node 
+    name="netft_node" 
+    pkg="netft_utils" 
+    type="netft_node" 
+    output="screen" 
+    args="192.168.2.120"
+  >
+  <remap from="netft_data" to="ati_wrench_raw"/>
+  <param name="tf_prefix" value="ati_"/>
+  </node>
+
+  <!-- From sun_ros_utils_nodes-->
+  <node 
+    name="wrench_bias" 
+    pkg="sun_ros_utils_nodes" 
+    type="wrench_bias" 
+    output="screen" 
+  >
+    <param name="in_topic" type="string" value="ati_wrench_raw"/>
+    <param name="out_topic" type="string" value="ati_wrench"/>
+    <param name="bias_service" type="string" value="ati_compute_bias"/>
+
+  </node>
+
+</launch>
